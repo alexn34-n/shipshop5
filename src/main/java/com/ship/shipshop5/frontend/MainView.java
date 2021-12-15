@@ -28,118 +28,117 @@ import java.util.stream.Collectors;
 
 @Route
 public class MainView extends VerticalLayout {
-    private final Grid<Product> grid=new Grid<>(Product.class);
+    private final Grid<Product> grid = new Grid<>(Product.class);
 
     private final ProductRepository productRepository;
     private final CartRepository cartRepository;
-    private  final CartService cartService;
-    private  final Authentication authentication;
-   // private  final TestVaadinSessionScope testVaadinSessionScope;
+    private final CartService cartService;
+    private final Authentication authentication;
+    //private final TestVaadinSessionScope testVaadinSessionScope;
 
 
     public MainView(ProductRepository productRepository,
-                    CartRepository cartRepository,
                     CartService cartService,
+                    CartRepository cartRepository,
                     TestVaadinSessionScope testVaadinSessionScope) {
+        // this.testVaadinSessionScope=testVaadinSessionScope;
+        this.cartRepository=cartRepository;
         this.productRepository = productRepository;
-        this.cartRepository = cartRepository;
         this.cartService = cartService;
         this.authentication = SecurityContextHolder.getContext().getAuthentication();
 
-        //this.testVaadinSessionScope = testVaadinSessionScope;
-
         initPage();
-       // VaadinSession.getCurrent().getSession().setMaxInactiveInterval(20);
+        // VaadinSession.getCurrent().getSession().setMaxInactiveInterval(20);
     }
 
     private void initPage() {
         initProductGrid();
         initMainPage();
+        //На случай когда нужно разделить роли, вырезать лишние кнопки у тех у кого нет прав
+        /*if(SecurityUtils.isAdmin(authentication)) {
+            add(initAddToCartButton());
+        }*/
     }
 
     private void initMainPage() {
         setDefaultHorizontalComponentAlignment(Alignment.CENTER);
-        add(initFirstRow(),grid,initAddToCartButton());
+        add(initFirstRow(), grid, initAddToCartButton());
     }
 
-
-
     private Component initFirstRow() {
-        var toCartButton=new Button("Корзина",item->{
+        var toCartButton = new Button("Корзина", item -> {
             UI.getCurrent().navigate("cart");
         });
 
-        var logoutButton=new Button("Выход",item->{
+        var logoutButton = new Button("Выход", item -> {
             SecurityContextHolder.clearContext();
             UI.getCurrent().navigate("login");
         });
-             return  new HorizontalLayout(toCartButton,logoutButton);
 
+        return new HorizontalLayout(toCartButton, logoutButton);
     }
 
     private HorizontalLayout initAddToCartButton() {
-
-        var addToCartButton=new Button("Добавить в корзину",items->{
-        var optionalCart=cartRepository.findCarByOrderIdIsNull();
+        var addToCartButton = new Button("Добавить в корзину", items -> {
+            var optionalCart=cartRepository.findCartByOrderIdIsNull();
             Cart cart;
-            if(optionalCart.isEmpty()){
-                cart=new Cart();
+            if (optionalCart.isEmpty()) {
+                cart = new Cart();
                 cart.setId(UUID.randomUUID());
                 cart.setUser(((CustomPrincipal)authentication.getPrincipal()).getUser());
-                cart.addToProductList(grid.getSelectedItems().stream().peek(p->p.setCount(1)).collect(Collectors.toSet()));
+                cart.setProductList(grid.getSelectedItems().stream().peek(p->p.setCount(1)).collect(Collectors.toSet()));
             }else{
-                cart= optionalCart.get();
+                cart = optionalCart.get();
                 cart.addToProductList(grid.getSelectedItems().stream().peek(p->p.setCount(1)).collect(Collectors.toSet()));
             }
-               cartRepository.save(cart);
-            Notification.show("Товар  успешно добавлен в корзину");
+            cartRepository.save(cart);
+            Notification.show("Товар успешно добавлен в корзину");
         });
 
-        return  new HorizontalLayout(addToCartButton);
+        return new HorizontalLayout(addToCartButton);
     }
 
-    private void initProductGrid(){
-        var products=productRepository.findAll();
+    private void initProductGrid() {
+        var products = productRepository.findAll();
 
         grid.setItems(products);
-        grid.setColumns("name","price","count");
+        grid.setColumns("name", "price", "count");
         grid.setSizeUndefined();
         grid.setSelectionMode(Grid.SelectionMode.MULTI);
-        ListDataProvider<Product> dataProvider= DataProvider.ofCollection(products);
+        ListDataProvider<Product> dataProvider = DataProvider.ofCollection(products);
         grid.setDataProvider(dataProvider);
-        
-        
+
         initPlusMinusButtons();
         initReviewsButtons();
 
     }
 
     private void initReviewsButtons() {
-        grid.addColumn(new ComponentRenderer<>(item->{
-            var seeReviewButton=new Button("Комментарии",i->{
+        grid.addColumn(new ComponentRenderer<>(item -> {
+            var seeReviewButton = new Button("Комментарии", i -> {
                 ComponentUtil.setData(UI.getCurrent(),"product",item);
                 UI.getCurrent().navigate("review");
             });
-            return  new HorizontalLayout(seeReviewButton);
+
+            return new HorizontalLayout( seeReviewButton);
         }));
     }
-    private void initPlusMinusButtons() {
 
-        grid.addColumn(new ComponentRenderer<>(item->{
-            var plusButton=new Button("+",i->{
+    private void initPlusMinusButtons() {
+        grid.addColumn(new ComponentRenderer<>(item -> {
+            var plusButton = new Button("+", i -> {
                 item.incrementCount();
                 productRepository.save(item);
                 grid.getDataProvider().refreshItem(item);
             });
 
-            var minusButton=new Button("-",i->{
+            var minusButton = new Button("-", i -> {
                 item.decreaseCount();
                 productRepository.save(item);
                 grid.getDataProvider().refreshItem(item);
             });
 
-             return new HorizontalLayout(plusButton,minusButton);
+            return new HorizontalLayout(plusButton, minusButton);
         }));
-
     }
 }

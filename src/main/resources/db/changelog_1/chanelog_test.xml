@@ -19,8 +19,8 @@
                                     price numeric(8, 2)
             );
 
-            insert into product(id, name, count, price) values('188c4450-e7db-4eb0-a499-15563d4ce054', 'буй', 12, 10000);
-            insert into product(id, name, count, price) values('6c4dc5fc-888c-4ec8-98ef-323f2fe121c4', 'жилет', 4, 30000);
+            insert into product(id, name, count, price) values('188c4450-e7db-4eb0-a499-15563d4ce054', 'буй', 12, 10000, 'Прочие','Рига');
+            insert into product(id, name, count, price) values('6c4dc5fc-888c-4ec8-98ef-323f2fe121c4', 'жилет', 4, 30000,'Прочие','Рига');
         </sql>
     </changeSet>
 

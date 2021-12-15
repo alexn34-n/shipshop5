@@ -21,8 +21,8 @@ public class Product implements Serializable {
     @Column(name="name",nullable = false)
     private String name;
 
-//    @Column(name="category",nullable = false)
-//    private String category;
+  @Column(name="category",nullable = false)
+    private String category;
 
 
     @Column(name="count")
@@ -31,12 +31,12 @@ public class Product implements Serializable {
     @Column(name="price")
     private BigDecimal price;
 
-//    @Column(name="port_Delivery")
-//    private String port_Delivery;
+  @Column(name="port_delivery")//
+  private String port_delivery;
 
 
-//    @Column(name="next_date")
-//    private Date next_date;
+//    @Column(name="next_date")//
+//   private Date next_date;
 
     @PrePersist
     private  void init(){
@@ -63,6 +63,8 @@ public class Product implements Serializable {
         return this;
     }
 
+
+
     public int getCount() {
         return count;
     }
@@ -80,6 +82,34 @@ public class Product implements Serializable {
         this.price = price;
         return this;
     }
+    //
+    public String getCategory() {
+        return category;
+    }
+    //
+    public Product setCategory(String category) {
+        this.category = category;
+        return this;
+    }
+//
+    public String getPort_delivery() {
+        return port_delivery;
+    }
+//
+    public Product setPort_delivery(String port_delivery) {
+        this.port_delivery = port_delivery;
+        return this;
+    }
+//
+//    public Date getNext_date() {
+//        return next_date;
+//    }
+////
+//    public Product setNext_date(Date next_date) {
+//        this.next_date = next_date;
+//        return this;
+//    }
+
     public void incrementCount(){
         this.count++;
     }

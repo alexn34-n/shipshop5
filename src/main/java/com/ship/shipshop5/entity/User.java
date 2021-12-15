@@ -19,8 +19,8 @@ public class User {
     private String secondName;
     private  String phone;
     private  String email;
-//    private String Imo;
-//    private  String nameShips;
+    private String imo;
+    private  String name_ship;
 //    private  String namePortStart;
 //    private  String namePortFinish;
 
@@ -112,6 +112,34 @@ public class User {
         this.email = email;
         return this;
     }
+
+    public String getImo() {
+        return imo;
+    }
+
+    public User setImo(String imo) {
+       this. imo = imo;
+        return this;
+    }
+
+    public String getName_ship() {
+        return name_ship;
+    }
+
+    public User setName_ship(String name_ship) {
+        this.name_ship = name_ship;
+        return this;
+    }
+
+    //    public String getName_ship() {
+//        return name_ship;
+//    }
+//
+//    public User setName_ship(String name_ship) {
+//        this.name_ship = name_ship;
+//        return this;
+//    }
+
     public String getFIO() {
 
         return String.format("%s %s %s",

@@ -15,7 +15,7 @@ import com.vaadin.flow.router.Route;
 import java.util.List;
 
 @Route("login")
-@PageTitle("Login| ShipsOrdersShop")//
+@PageTitle("Login| ShipsOrdersShop")
 public class LoginView extends VerticalLayout implements BeforeEnterObserver {
     private LoginForm login=new LoginForm();
 

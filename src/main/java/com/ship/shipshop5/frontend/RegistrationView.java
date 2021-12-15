@@ -35,6 +35,8 @@ public class RegistrationView extends VerticalLayout {
         var lastNameTextField = initTextFieldWithPlaceholder("Фамилия");
         var secondNameTextField = initTextFieldWithPlaceholder("Отчество");
         var emailTextField = initTextFieldWithPlaceholder("Почта");
+        var imoTextField = initTextFieldWithPlaceholder("Имо судна");
+        var name_shipTextField = initTextFieldWithPlaceholder("Название судна");
 
         var registrationButton = new Button("Зарегистрироваться", event -> {
             boolean hasError = false;
@@ -68,7 +70,9 @@ public class RegistrationView extends VerticalLayout {
                         emailTextField.getValue(),
                         nameTextField.getValue(),
                         secondNameTextField.getValue(),
-                        lastNameTextField.getValue()
+                        lastNameTextField.getValue(),
+                        imoTextField.getValue(),
+                        name_shipTextField.getValue()
                 );
 
                 Notification.show("Регистрация прошла успешно");
@@ -76,7 +80,8 @@ public class RegistrationView extends VerticalLayout {
             }
         });
 
-        add(loginTextField, passwordTextField, phoneTextField, emailTextField, nameTextField, lastNameTextField, secondNameTextField, registrationButton);
+        add(loginTextField, passwordTextField, phoneTextField, emailTextField, nameTextField,
+                lastNameTextField, secondNameTextField, imoTextField, name_shipTextField, registrationButton);
     }
 
     private TextField initTextFieldWithPlaceholder(String placeholder) {

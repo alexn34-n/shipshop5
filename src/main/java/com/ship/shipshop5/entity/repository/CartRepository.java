@@ -9,10 +9,11 @@ import java.util.Optional;
 import java.util.UUID;
 
 public interface CartRepository extends JpaRepository<Cart, UUID> {
-    @Query("select c from Cart c where  c.order is null")
-    Optional<Cart> findCarByOrderIdIsNull();
+    @Query("select c from Cart c where c.order is null")
+    Optional<Cart> findCartByOrderIdIsNull();
 
-    @Query("select c from  Cart c where c.user=:user and c.order is null")
+
+    @Query("select c from Cart c where c.user=:user and c.order is null")
     Optional<Cart> findByUser(User user);
 }
 //

@@ -23,7 +23,8 @@ public class UserService {
                 .orElseThrow(() -> new NotFoundException(String.format("Пользователь с идентификатором %s не найден", id)));
     }
 
-    public  User saveUser(String phone,String login,String password,String email,String name, String secondName,String lastName ){
+    public  User saveUser(String phone,String login,String password,String email,String name,
+                          String secondName,String lastName,String imo,String name_ship){
         var user=new User()
                 .setPhone(phone)
                 .setLogin(login)
@@ -32,9 +33,10 @@ public class UserService {
                 .setName(name)
                 .setSecondName(secondName)
                 .setLastName(lastName)
-                .setRole("CUSTOMER");
-//                 .setNameShip(nameShip)
-//                 .setImo(imo)
+                .setRole("CUSTOMER")
+                .setImo(imo)
+                .setName_ship(name_ship);
+//
 //                .setPositionStaff(positionStaff)
 
         return userRepository.save(user);
