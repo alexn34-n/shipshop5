@@ -24,6 +24,16 @@
             <column name="role" type="varchar(36)">
                 <constraints nullable="false"/>
             </column>
+
+            <column name="imo" type="varchar(36)">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="name_ship" type="varchar(36)">
+                <constraints nullable="false"/>
+            </column>
+
+
         </createTable>
 
         <createTable tableName="product">
@@ -32,8 +42,14 @@
             </column>
             <column name="name" type="varchar(36)">
                 <constraints nullable="false"/>
-            </column>
+
+           </column>
             <column name="count" type="int" defaultValue="0"/>
+            <column name="price" type="int" defaultValue="0"/>
+            <column name="category" type="varchar(36)" defaultValue="0"/>
+            <column name="port_delivery" type="varchar(36)" defaultValue="0"/>
+<!---->
+
         </createTable>
 
         <createTable tableName="review">

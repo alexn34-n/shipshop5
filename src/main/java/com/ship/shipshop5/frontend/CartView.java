@@ -18,6 +18,7 @@ import com.vaadin.flow.data.provider.ListDataProvider;
 import com.vaadin.flow.data.renderer.ComponentRenderer;
 import com.vaadin.flow.router.Route;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 
 import java.time.OffsetDateTime;
 import java.util.Collections;
@@ -25,50 +26,45 @@ import java.util.UUID;
 
 @Route("cart")
 public class CartView extends VerticalLayout {
-
-
-    private final Grid<Product> grid=new Grid<>(Product.class);
+    private final Grid<Product> grid = new Grid<>(Product.class);
 
     private final CartService cartService;
     private final CartRepository cartRepository;
     private final MailService mailService;
-    private  final OrderRepository orderRepository;
+    private final OrderRepository orderRepository;
     private final Authentication authentication;
 
-
     public CartView(CartService cartService,
-                    CartRepository cartRepository,
                     MailService mailService,
                     OrderRepository orderRepository,
-                    Authentication authentication) {
-
+                    CartRepository cartRepository) {
         this.cartService = cartService;
-        this.cartRepository = cartRepository;
+        this.cartRepository=cartRepository;
         this.mailService = mailService;
         this.orderRepository = orderRepository;
-        this.authentication = authentication;
+        this.authentication = SecurityContextHolder.getContext().getAuthentication();
 
         initCartGrid();
     }
 
+
     private void initCartGrid() {
         var optionalCart=cartRepository.findByUser(((CustomPrincipal)authentication.getPrincipal()).getUser());
         Cart cart;
-        if (optionalCart.isEmpty()){
+        if(optionalCart.isEmpty()) {
             cart=new Cart();
             cart.setId(UUID.randomUUID());
             cart.setUser(((CustomPrincipal)authentication.getPrincipal()).getUser());
             cartRepository.save(cart);
-
-        }else{
-            cart=optionalCart.get();
+        }else {
+            cart= optionalCart.get();
         }
 
-        grid.setItems(cart.getProductList()!=null? cart.getProductList(): Collections.emptyList());
-        grid.setColumns("name","count");
+        grid.setItems(cart.getProductList()!=null ? cart.getProductList(): Collections.emptyList());
+        grid.setColumns("name", "count");
         grid.setSizeUndefined();
         grid.setSelectionMode(Grid.SelectionMode.MULTI);
-        ListDataProvider<Product> dataProvider= DataProvider.ofCollection(cart.getProductList());
+        ListDataProvider<Product> dataProvider = DataProvider.ofCollection(cart.getProductList());
         grid.setDataProvider(dataProvider);
 
         grid.addColumn(new ComponentRenderer<>(item -> {
@@ -96,10 +92,11 @@ public class CartView extends VerticalLayout {
 
             UI.getCurrent().navigate("");
 
-            //mailService.sendMessage("alexn8996@mail.ru", "Ваш заказ успешно создан. Прибудет через несколько дней.</b>");
+            //mailService.sendMessage("alexn8996@mail.ru", "Ваш заказ успешно создан. Просьба оплатить.</b>");
         });
 
         add(grid, button);
     }
 }
+
 //

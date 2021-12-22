@@ -8,13 +8,20 @@
         <renameTable oldTableName="card" newTableName="cart"/>
 
         <sql>
-            insert into product(id, name, count) values(uuid_generate_v4(), 'Масло ВС100',15);
-            insert into product(id, name, count) values(uuid_generate_v4(), 'Прокладка ПК158х45',10);
-            insert into product(id, name, count) values(uuid_generate_v4(), 'Вода питьевая', 5);
-            insert into product(id, name, count) values(uuid_generate_v4(), 'Аптечка',23);
-            insert into product(id, name, count) values(uuid_generate_v4(), 'Зарядное устройство',14);
-            insert into product(id, name, count) values(uuid_generate_v4(), 'Элетростанция',38);
-            insert into product(id, name, count) values(uuid_generate_v4(), 'Коммпрессор',17);
+            insert into product(id, name, count, price, category, port_delivery) values(uuid_generate_v4(), 'Масло ВС100',150,22,'ГСМ','Балтийск');
+            insert into product(id, name, count, price, category, port_delivery) values(uuid_generate_v4(), 'Масло ВС100',100,20,'ГСМ','Усть-Луга');
+            insert into product(id, name, count, price, category, port_delivery) values(uuid_generate_v4(), 'Прокладка ПК158х45',10,180,'Запчасти','Таллин');
+            insert into product(id, name, count, price, category, port_delivery) values(uuid_generate_v4(), 'Вода питьевая', 5000,3,'Продукты','Балтийск');
+            insert into product(id, name, count, price,category, port_delivery) values(uuid_generate_v4(), 'Вода питьевая', 4000,5,'Продукты','Таллин');
+            insert into product(id, name, count, price, category, port_delivery) values(uuid_generate_v4(), 'Вода питьевая', 5000,3,'Продукты','Усть-Луга');
+            insert into product(id, name, count, price, category, port_delivery) values(uuid_generate_v4(), 'Аптечка',23,100,'Прочие','Усть-Луга');
+            insert into product(id, name, count, price,category, port_delivery) values(uuid_generate_v4(), 'Аптечка',35,100,'Прочие','Таллин');
+            insert into product(id, name, count, price, category, port_delivery) values(uuid_generate_v4(), 'Зарядное устройство',24,40,'Инструмент','Балтийск');
+            insert into product(id, name, count, price, category, port_delivery) values(uuid_generate_v4(), 'Зарядное устройство',35,50,'Инструмент','Клайпеда');
+            insert into product(id, name, count, price,category, port_delivery) values(uuid_generate_v4(), 'Элетростанция',35,4000,'Оборудование','Усть-Луга');
+            insert into product(id, name, count, price,category, port_delivery) values(uuid_generate_v4(), 'Коммпрессор',17,16000,'Оборудование','Рига');
+            insert into product(id, name, count, price,category, port_delivery) values(uuid_generate_v4(), 'Коммпрессор',10,12000,'Оборудование','Гданск');
+
 
         </sql>
     </changeSet>

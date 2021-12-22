@@ -7,8 +7,11 @@
     <changeSet id="add-products" author="alexn">
         <insert tableName="product">
             <column name="id" valueComputed="uuid_generate_v4()"/>
-            <column name="name" value="Опрыск0ватель"/>
+            <column name="name" value="Прокладка В34"/>
             <column name="count" value="1"/>
+            <column name="price" value="15"/>
+            <column name="category" value="Запчасти"/>
+            <column name="port_delivery" value="Рига"/>
         </insert>
     </changeSet>
 
@@ -20,6 +23,9 @@
             <column name="password" value="$2y$12$rxg3cYnpaZsNwAVuaiKZXeDb69dR.h9foNdfARmOp/9UBRLymKV22"/>
             <column name="phone" value="123123"/>
             <column name="role" value="admin"/>
+            <column name="imo" value="1111111"/>
+            <column name="name_ship" value="офис"/>
+
         </insert>
     </changeSet>
 
@@ -35,12 +41,22 @@
         <renameTable oldTableName="order" newTableName="orders"/>
     </changeSet>
 
-    <changeSet id="add-price-column" author="alexn">
-        <addColumn tableName="product">
-            <column name="price" type="NUMERIC"/>
-        </addColumn>
-    </changeSet>
+<!--    <changeSet id="add-price-column" author="alexn">-->
+<!--        <addColumn tableName="product">-->
+<!--            <column name="price" type="NUMERIC"/>-->
+<!--        </addColumn>-->
+<!--    </changeSet>-->
+<!--    <changeSet id="add-category-column" author="alexn">-->
+<!--        <addColumn tableName="product">-->
+<!--            <column name="category" type="varchar(36)"/>-->
+<!--        </addColumn>-->
+<!--    </changeSet>-->
 
+<!--    <changeSet id="add-port_delivery-column" author="alexn">-->
+<!--        <addColumn tableName="product">-->
+<!--            <column name="port_Delivery" type="varchar(36)"/>-->
+<!--        </addColumn>-->
+<!--    </changeSet>-->
 
     <changeSet id="add-email-column" author="alexn">
         <addColumn tableName="user">
@@ -48,14 +64,14 @@
         </addColumn>
     </changeSet>
 
-    <changeSet id="create-table-review" author="alexn">
-        <addColumn tableName="review">
-            <column name="is_moderated" type="boolean" defaultValue="false"/>
-            <column name="user_id" type="UUID">
-                <constraints nullable="false" foreignKeyName="fk_user_id" references="user(id)"/>
-            </column>
-        </addColumn>
-    </changeSet>
+<!--    <changeSet id="create-table-review" author="alexn">-->
+<!--        <addColumn tableName="review">-->
+<!--            <column name="is_moderated" type="boolean" defaultValue="false"/>-->
+<!--            <column name="user_id" type="UUID">-->
+<!--                <constraints nullable="false" foreignKeyName="fk_user_id" references="user(id)"/>-->
+<!--            </column>-->
+<!--        </addColumn>-->
+<!--    </changeSet>-->
 
     <changeSet id="alter-table-cart" author="alexn">
         <addPrimaryKey tableName="orders" columnNames="id"/>

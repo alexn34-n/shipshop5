@@ -57,6 +57,7 @@ public class Cart {
             this.products=new HashSet<>();
         }
         this.products.addAll(product);
+
         return this;
     }
 
